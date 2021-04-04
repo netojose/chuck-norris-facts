@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'enzyme'
-import QuoteList from '../components/QuoteList'
+import QuoteList from '../components/QuotesList'
 
 describe('QuoteList', () => {
     it('Renders Hello component', () => {

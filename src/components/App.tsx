@@ -1,32 +1,25 @@
-import React, { FunctionComponent } from 'react'
-import QuoteList from './QuoteList'
-import TabNavigator from './TabNavigator'
-import Title from './Title'
-import { Form, Select, Input, Submit } from './Form'
+/** @jsx jsx */
+import { jsx, ThemeProvider, Global, css } from '@emotion/react'
 
-export const App: FunctionComponent = () => (
-    <div>
-        <Title text="Chuck Norris fact searcher" />
-        <Form>
-            <TabNavigator labels={['Get random quote', 'Search by term']}>
-                <div>
-                    <Select label="Category" />
-                </div>
-                <div>
-                    <Input label="Term" />
-                </div>
-            </TabNavigator>
-            <Submit label="Search" />
-        </Form>
-        <QuoteList
-            quotes={[
-                {
-                    id: '1',
-                    text: 'some text',
-                    url: '',
-                    categories: ['foo', 'bar'],
+import theme from '../utils/theme'
+
+import LayoutDirectionChoser from './LayoutDirectionChoser'
+import ChuckNorrisSearcher from './ChuckNorrisSearcher'
+
+export default (): JSX.Element => (
+    <ThemeProvider theme={theme}>
+        <Global
+            styles={css({
+                body: { margin: 0 },
+                '*': { fontSize: '1em', boxSizing: 'border-box' },
+                '*:focus': {
+                    outline: 'none',
+                    boxShadow: '0 0 0 1px rgba(0, 147, 255, 0.4)',
+                    transition: 'all 0.3s ease',
                 },
-            ]}
+            })}
         />
-    </div>
+        <LayoutDirectionChoser />
+        <ChuckNorrisSearcher />
+    </ThemeProvider>
 )

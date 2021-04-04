@@ -12,21 +12,46 @@ export default ({ labels, children }: Props): JSX.Element => {
     const handleSetActive = useCallback((index) => setActive(index), [])
     return (
         <div>
-            <ul>
+            <ul
+                css={(theme) => ({
+                    listStyle: 'none',
+                    display: 'flex',
+                    padding: 0,
+                    borderBottom: 'solid 1px',
+                    borderBottomColor: theme.colors.dark50,
+                })}
+            >
                 {labels.map((label, index) => (
-                    <li key={label}>
+                    <li
+                        key={label}
+                        className={index === active ? 'active' : ''}
+                        css={(theme) => ({
+                            color: theme.colors.secondary,
+                            '&.active': {
+                                borderBottom: 'solid 1px',
+                                borderBottomColor: theme.colors.dark,
+                                color: theme.colors.primary,
+                            },
+                        })}
+                    >
                         <span
                             onClick={() => handleSetActive(index)}
                             onKeyPress={() => handleSetActive(index)}
                             role="button"
                             tabIndex={0}
+                            css={(theme) => ({
+                                fontFamily: theme.fontFamily,
+                                display: 'block',
+                                padding: theme.spacing,
+                                cursor: 'pointer',
+                            })}
                         >
                             {label}
                         </span>
                     </li>
                 ))}
             </ul>
-            {children.filter((_, index) => index === active)}
+            {children.find((_, index) => index === active)}
         </div>
     )
 }
