@@ -6,12 +6,13 @@ import { inputStyles } from '../common'
 
 interface Props {
     label: string
+    name: string
 }
 
-export default ({ label }: Props): JSX.Element => {
+export default ({ label, name }: Props): JSX.Element => {
     return (
-        <InputWrapper label={label} name="foo">
-            {({ handleChange, value, id, name }) => (
+        <InputWrapper label={label} name={name}>
+            {({ handleChange, value, id }) => (
                 <input
                     id={id}
                     name={name}
