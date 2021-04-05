@@ -1,28 +1,44 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+
+interface IParams {
+    url?: string
+    autoFetch?: boolean
+}
 
 interface HookReturn {
     response: any // eslint-disable-line
     error: string | null
     isLoading: boolean
+    fetchData: (url: string) => void
 }
 
-export default (url: string): HookReturn => {
+export default ({ url = '', autoFetch = true }: IParams): HookReturn => {
     const [response, setResponse] = useState(null)
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
-    useEffect(() => {
-        const fetchData = async () => {
-            setIsLoading(true)
-            try {
-                const res = await fetch(url)
-                const json = await res.json()
-                setResponse(json)
-                setIsLoading(false)
-            } catch (responseError) {
-                setError(responseError)
-            }
+
+    const fetchData = useCallback(async (urlFetch: string) => {
+        setIsLoading(true)
+        try {
+            const res = await fetch(urlFetch)
+            const json = await res.json()
+            setResponse(json)
+            setIsLoading(false)
+        } catch (responseError) {
+            setError(responseError)
         }
-        fetchData()
-    }, [url])
-    return { response, error, isLoading }
+    }, [])
+
+    useEffect(() => {
+        if (!url) {
+            setResponse(null)
+            setError(null)
+            setIsLoading(false)
+            return
+        }
+        if (autoFetch) {
+            fetchData(url)
+        }
+    }, [url, fetchData, autoFetch])
+    return { response, error, isLoading, fetchData }
 }

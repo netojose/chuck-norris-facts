@@ -6,11 +6,12 @@ import { Form, Select, Submit } from './Form'
 
 interface Props {
     categories: string[]
+    onSubmit: (data: Record<string, string | number>) => void
 }
 
 type Option = { label: string; value: string }
 
-export default ({ categories }: Props): JSX.Element => {
+export default ({ categories, onSubmit }: Props): JSX.Element => {
     const [data, setData] = useState<Record<string, string>>({})
     const options = useMemo<Array<Option>>(
         () =>
@@ -21,10 +22,11 @@ export default ({ categories }: Props): JSX.Element => {
         [categories]
     )
     return (
-        <Form onChange={setData} onSubmit={() => null} values={data}>
+        <Form onChange={setData} onSubmit={onSubmit} values={data}>
             <Select
                 label="Category"
                 items={[{ label: 'All', value: '' }, ...options]}
+                name="category"
             />
             <Submit label="Load quotes" />
         </Form>

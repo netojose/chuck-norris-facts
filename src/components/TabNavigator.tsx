@@ -5,11 +5,22 @@ import { useCallback, useState } from 'react'
 export interface Props {
     labels: string[]
     children: JSX.Element[]
+    onChangeTab?: (index: number) => void
 }
 
-export default ({ labels, children }: Props): JSX.Element => {
+export default ({
+    labels,
+    children,
+    onChangeTab = () => null,
+}: Props): JSX.Element => {
     const [active, setActive] = useState(0)
-    const handleSetActive = useCallback((index) => setActive(index), [])
+    const handleSetActive = useCallback(
+        (index) => {
+            onChangeTab(index)
+            setActive(index)
+        },
+        [onChangeTab]
+    )
     return (
         <div>
             <ul

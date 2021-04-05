@@ -4,11 +4,15 @@ import { useState } from 'react'
 
 import { Form, Input, Submit } from './Form'
 
-export default (): JSX.Element => {
+interface Props {
+    onSubmit: (data: Record<string, string | number>) => void
+}
+
+export default ({ onSubmit }: Props): JSX.Element => {
     const [data, setData] = useState<Record<string, string>>({})
     return (
-        <Form onChange={setData} onSubmit={() => null} values={data}>
-            <Input label="Search term" />
+        <Form onChange={setData} onSubmit={onSubmit} values={data}>
+            <Input label="Search term" name="term" />
             <Submit label="Search quotes" />
         </Form>
     )

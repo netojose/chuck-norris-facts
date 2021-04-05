@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 import QuoteList from './QuotesList'
 import TabNavigator from './TabNavigator'
@@ -9,21 +9,82 @@ import FormSearchCategory from './FormSearchCategory'
 import FormSearchTerm from './FormSearchTerm'
 import useFetch from '../hooks/useFetch'
 
+const BASE_URL = process.env.API_BASE_URL
+
+interface IQuote {
+    id: string
+    value: string
+    url: string
+    categories: string[]
+}
+
 export default (): JSX.Element => {
+    const [quotes, setQuotes] = useState([])
     const [categories, setCategories] = useState<string[]>([])
-    const { response } = useFetch('https://api.chucknorris.io/jokes/categories')
+    const { response: responseCategories } = useFetch({
+        url: `${BASE_URL}/categories`,
+    })
+    const {
+        response: responseQuotes,
+        error: errorQuotes,
+        fetchData: loadQuotes,
+    } = useFetch({ autoFetch: false })
+
     useEffect(() => {
-        if (response) {
-            setCategories(response)
+        if (responseCategories) {
+            setCategories(responseCategories)
         }
-    }, [response])
+    }, [responseCategories])
+
+    useEffect(() => {
+        if (!errorQuotes && responseQuotes) {
+            const data = responseQuotes.result
+                ? responseQuotes.result
+                : [responseQuotes]
+            setQuotes(
+                data.map((quote: IQuote) => ({
+                    id: quote.id,
+                    text: quote.value,
+                    url: quote.url,
+                    categories: quote.categories,
+                }))
+            )
+        }
+    }, [responseQuotes, errorQuotes])
+
+    const handleSearchByTerm = useCallback(
+        (values) => {
+            const term: string = (values.term ?? '').trim()
+            if (term.length < 3) {
+                return
+            }
+            loadQuotes(`${BASE_URL}/search?query=${term}`)
+        },
+        [loadQuotes]
+    )
+
+    const handleSearchByCategory = useCallback(
+        (values) => {
+            const category: string = values.category ?? ''
+            const url = category
+                ? `${BASE_URL}/random?category=${category}&c=3`
+                : `${BASE_URL}/random`
+            // setSearchUrl(url)
+            loadQuotes(url)
+        },
+        [loadQuotes]
+    )
+
+    const handleChangeTab = useCallback(() => {
+        setQuotes([])
+    }, [])
 
     return (
         <div
             css={(theme) => ({
                 display: 'flex',
                 justifyContent: 'center',
-                height: '100vh',
+                minHeight: '100vh',
                 background: theme.colors.primary,
             })}
         >
@@ -35,26 +96,17 @@ export default (): JSX.Element => {
                 })}
             >
                 <Title text="Chuck Norris fact searcher" />
-                <TabNavigator labels={['Get random quote', 'Search by term']}>
-                    <FormSearchCategory categories={categories} />
-                    <FormSearchTerm />
+                <TabNavigator
+                    labels={['Get random quote', 'Search by term']}
+                    onChangeTab={handleChangeTab}
+                >
+                    <FormSearchCategory
+                        categories={categories}
+                        onSubmit={handleSearchByCategory}
+                    />
+                    <FormSearchTerm onSubmit={handleSearchByTerm} />
                 </TabNavigator>
-                <QuoteList
-                    quotes={[
-                        {
-                            id: '1',
-                            text: 'quote',
-                            url: '',
-                            categories: ['foo', 'bar'],
-                        },
-                        {
-                            id: '2',
-                            text: 'quote',
-                            url: '',
-                            categories: ['foo', 'bar'],
-                        },
-                    ]}
-                />
+                <QuoteList quotes={quotes} />
             </div>
         </div>
     )
