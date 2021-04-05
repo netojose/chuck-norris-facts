@@ -4,14 +4,14 @@ import { useState, useMemo } from 'react'
 
 import { Form, Select, Submit } from './Form'
 
-interface Props {
+interface IProps {
     categories: string[]
     onSubmit: (data: Record<string, string | number>) => void
 }
 
 type Option = { label: string; value: string }
 
-export default ({ categories, onSubmit }: Props): JSX.Element => {
+export default ({ categories, onSubmit }: IProps): JSX.Element => {
     const [data, setData] = useState<Record<string, string>>({})
     const options = useMemo<Array<Option>>(
         () =>

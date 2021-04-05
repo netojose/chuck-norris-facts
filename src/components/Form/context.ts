@@ -1,11 +1,11 @@
 import { createContext } from 'react'
 
-export interface ContextShape {
+export interface IContextShape {
     handleChange: (name: string, value: string) => void
     values: Record<string, string>
 }
 
-const formContext = createContext<ContextShape>({
+const formContext = createContext<IContextShape>({
     values: {},
     handleChange: () => null,
 })

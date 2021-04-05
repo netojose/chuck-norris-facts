@@ -4,11 +4,11 @@ import { memo } from 'react'
 
 import { inputStyles } from '../common'
 
-interface Props {
+interface IProps {
     label: string
 }
 
-const Submit = ({ label }: Props): JSX.Element => (
+const Submit = ({ label }: IProps): JSX.Element => (
     <input
         type="submit"
         value={label}

@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 
 import FormContext from '../context'
 
-interface Props {
+interface IProps {
     children: JSX.Element[]
     values: Record<string, string>
     onChange: (event: Record<string, string>) => void
@@ -16,7 +16,7 @@ export default ({
     onSubmit,
     onChange,
     values,
-}: Props): JSX.Element => {
+}: IProps): JSX.Element => {
     const handleSubmit = useCallback(
         (e) => {
             e.preventDefault()

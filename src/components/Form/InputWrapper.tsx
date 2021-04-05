@@ -3,9 +3,9 @@ import { jsx } from '@emotion/react'
 import { useContext, useRef } from 'react'
 
 import newId from '../../utils/new-id'
-import FormContext, { ContextShape } from './context'
+import FormContext, { IContextShape } from './context'
 
-export interface Props {
+export interface IProps {
     children: (obj: {
         value: string
         label: string
@@ -17,9 +17,9 @@ export interface Props {
     name: string
 }
 
-export default ({ children, label, name }: Props): JSX.Element => {
+export default ({ children, label, name }: IProps): JSX.Element => {
     const { current: id } = useRef(newId())
-    const { values, handleChange } = useContext<ContextShape>(FormContext)
+    const { values, handleChange } = useContext<IContextShape>(FormContext)
     const value: string = values[name] || ''
 
     return (

@@ -4,7 +4,7 @@ import { memo } from 'react'
 
 import PillsList from './PillsList'
 
-export interface Props {
+export interface IProps {
     quotes: {
         id: string
         text: string
@@ -13,7 +13,7 @@ export interface Props {
     }[]
 }
 
-const QuotesList = ({ quotes }: Props): JSX.Element => (
+const QuotesList = ({ quotes }: IProps): JSX.Element => (
     <section>
         <h2
             css={(theme) => ({

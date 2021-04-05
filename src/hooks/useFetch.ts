@@ -5,14 +5,14 @@ interface IParams {
     autoFetch?: boolean
 }
 
-interface HookReturn {
+interface IHookReturn {
     response: any // eslint-disable-line
     error: string | null
     isLoading: boolean
     fetchData: (url: string) => void
 }
 
-export default ({ url = '', autoFetch = true }: IParams): HookReturn => {
+export default ({ url = '', autoFetch = true }: IParams): IHookReturn => {
     const [response, setResponse] = useState(null)
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(false)

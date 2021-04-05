@@ -2,11 +2,11 @@
 import { jsx } from '@emotion/react'
 import { memo } from 'react'
 
-export interface Props {
+export interface IProps {
     items: string[]
 }
 
-const PillsList = ({ items }: Props): JSX.Element => (
+const PillsList = ({ items }: IProps): JSX.Element => (
     <ul
         css={(theme) => ({
             listStyle: 'none',

@@ -4,12 +4,12 @@ import { jsx } from '@emotion/react'
 import InputWrapper from '../InputWrapper'
 import { inputStyles } from '../common'
 
-interface Props {
+interface IProps {
     label: string
     name: string
 }
 
-export default ({ label, name }: Props): JSX.Element => {
+export default ({ label, name }: IProps): JSX.Element => {
     return (
         <InputWrapper label={label} name={name}>
             {({ handleChange, value, id }) => (

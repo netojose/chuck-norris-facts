@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/react'
 import { useCallback, useState } from 'react'
 
-export interface Props {
+export interface IProps {
     labels: string[]
     children: JSX.Element[]
     onChangeTab?: (index: number) => void
@@ -12,7 +12,7 @@ export default ({
     labels,
     children,
     onChangeTab = () => null,
-}: Props): JSX.Element => {
+}: IProps): JSX.Element => {
     const [active, setActive] = useState(0)
     const handleSetActive = useCallback(
         (index) => {
