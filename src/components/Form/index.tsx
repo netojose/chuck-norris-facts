@@ -1,12 +1,15 @@
 /** @jsx jsx */
 import { jsx, Theme } from '@emotion/react'
-import { useRef } from 'react'
+import { useCallback } from 'react'
 
-import newId from '../../utils/new-id'
-import Wrapper from './Wrapper'
+import FormContext from './context'
+import InputWrapper from './InputWrapper'
 
 interface PropsForm {
     children: JSX.Element[]
+    values: Record<string, string>
+    onChange: (event: Record<string, string>) => void
+    onSubmit: (values: Record<string, string>) => void
 }
 
 interface PropsField {
@@ -30,40 +33,73 @@ const inputStyles = (theme: Theme) => ({
     color: theme.colors.dark,
 })
 
-const Form = ({ children }: PropsForm): JSX.Element => <form>{children}</form>
+const Form = ({
+    children,
+    onSubmit,
+    onChange,
+    values,
+}: PropsForm): JSX.Element => {
+    const handleSubmit = useCallback(
+        (e) => {
+            e.preventDefault()
+            onSubmit(values)
+        },
+        [onSubmit, values]
+    )
+    const context = {
+        values,
+        handleChange: (name: string, value: string) =>
+            onChange({ ...values, [name]: value }),
+    }
+    return (
+        <form onSubmit={handleSubmit}>
+            <FormContext.Provider value={context}>
+                {children}
+            </FormContext.Provider>
+        </form>
+    )
+}
 
 const Input = ({ label }: PropsField): JSX.Element => {
-    const id = useRef(newId())
     return (
-        <Wrapper id={id.current} label={label}>
-            <input
-                id={id.current}
-                type="text"
-                css={(theme) => ({
-                    ...inputStyles(theme),
-                })}
-            />
-        </Wrapper>
+        <InputWrapper label={label} name="foo">
+            {({ handleChange, value, id, name }) => (
+                <input
+                    id={id}
+                    name={name}
+                    value={value}
+                    onChange={(e) => handleChange(name, e.target.value)}
+                    type="text"
+                    css={(theme) => ({
+                        ...inputStyles(theme),
+                    })}
+                />
+            )}
+        </InputWrapper>
     )
 }
 
 const Select = ({ label, items }: PropsSelect): JSX.Element => {
-    const id = useRef(newId())
     return (
-        <Wrapper id={id.current} label={label}>
-            <select
-                id={id.current}
-                css={(theme) => ({
-                    ...inputStyles(theme),
-                })}
-            >
-                {items.map((item) => (
-                    <option key={item.value} value={item.value}>
-                        {item.label}
-                    </option>
-                ))}
-            </select>
-        </Wrapper>
+        <InputWrapper label={label} name="bar">
+            {({ handleChange, value, id, name }) => (
+                <select
+                    id={id}
+                    name={name}
+                    onChange={(e) => handleChange(name, e.target.value)}
+                    value={value}
+                    css={(theme) => ({
+                        ...inputStyles(theme),
+                    })}
+                >
+                    {items.map((item) => (
+                        <option key={item.value} value={item.value}>
+                            {item.label}
+                        </option>
+                    ))}
+                </select>
+            )}
+        </InputWrapper>
     )
 }
 
