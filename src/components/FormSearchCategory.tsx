@@ -7,11 +7,16 @@ import { Form, Select, Submit } from './Form'
 interface IProps {
     categories: string[]
     onSubmit: (data: Record<string, string | number>) => void
+    disableSubmit: boolean
 }
 
 type Option = { label: string; value: string }
 
-export default ({ categories, onSubmit }: IProps): JSX.Element => {
+export default ({
+    categories,
+    onSubmit,
+    disableSubmit,
+}: IProps): JSX.Element => {
     const [data, setData] = useState<Record<string, string>>({})
     const options = useMemo<Array<Option>>(
         () =>
@@ -28,7 +33,7 @@ export default ({ categories, onSubmit }: IProps): JSX.Element => {
                 items={[{ label: 'All', value: '' }, ...options]}
                 name="category"
             />
-            <Submit label="Load quotes" />
+            <Submit label="Load quotes" disabled={disableSubmit} />
         </Form>
     )
 }

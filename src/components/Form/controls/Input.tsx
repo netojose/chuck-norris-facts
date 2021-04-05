@@ -7,9 +7,10 @@ import { inputStyles } from '../common'
 interface IProps {
     label: string
     name: string
+    placeholder?: string
 }
 
-export default ({ label, name }: IProps): JSX.Element => {
+export default ({ label, name, placeholder = '' }: IProps): JSX.Element => {
     return (
         <InputWrapper label={label} name={name}>
             {({ handleChange, value, id }) => (
@@ -17,6 +18,7 @@ export default ({ label, name }: IProps): JSX.Element => {
                     id={id}
                     name={name}
                     value={value}
+                    placeholder={placeholder}
                     onChange={(e) => handleChange(name, e.target.value)}
                     type="text"
                     css={(theme) => ({

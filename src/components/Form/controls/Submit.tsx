@@ -6,11 +6,13 @@ import { inputStyles } from '../common'
 
 interface IProps {
     label: string
+    disabled: boolean
 }
 
-const Submit = ({ label }: IProps): JSX.Element => (
+const Submit = ({ label, disabled = false }: IProps): JSX.Element => (
     <input
         type="submit"
+        disabled={disabled}
         value={label}
         css={(theme) => ({
             ...inputStyles(theme),

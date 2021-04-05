@@ -28,6 +28,7 @@ export default (): JSX.Element => {
         response: responseQuotes,
         error: errorQuotes,
         fetchData: loadQuotes,
+        isLoading: isLoadingSearch,
     } = useFetch({ autoFetch: false })
 
     useEffect(() => {
@@ -55,9 +56,6 @@ export default (): JSX.Element => {
     const handleSearchByTerm = useCallback(
         (values) => {
             const term: string = (values.term ?? '').trim()
-            if (term.length < 3) {
-                return
-            }
             loadQuotes(`${BASE_URL}/search?query=${term}`)
         },
         [loadQuotes]
@@ -67,9 +65,8 @@ export default (): JSX.Element => {
         (values) => {
             const category: string = values.category ?? ''
             const url = category
-                ? `${BASE_URL}/random?category=${category}&c=3`
+                ? `${BASE_URL}/random?category=${category}`
                 : `${BASE_URL}/random`
-            // setSearchUrl(url)
             loadQuotes(url)
         },
         [loadQuotes]
@@ -103,8 +100,12 @@ export default (): JSX.Element => {
                     <FormSearchCategory
                         categories={categories}
                         onSubmit={handleSearchByCategory}
+                        disableSubmit={isLoadingSearch}
                     />
-                    <FormSearchTerm onSubmit={handleSearchByTerm} />
+                    <FormSearchTerm
+                        onSubmit={handleSearchByTerm}
+                        disableSubmit={isLoadingSearch}
+                    />
                 </TabNavigator>
                 <QuoteList quotes={quotes} />
             </div>
