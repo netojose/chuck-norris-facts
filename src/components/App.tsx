@@ -1,10 +1,9 @@
 /** @jsx jsx */
 import { jsx, ThemeProvider, Global, css } from '@emotion/react'
 
-import theme from '../utils/theme'
-
 import LayoutDirectionChoser from './LayoutDirectionChoser'
 import ChuckNorrisSearcher from './ChuckNorrisSearcher'
+import theme from '../utils/theme'
 
 export default (): JSX.Element => (
     <ThemeProvider theme={theme}>

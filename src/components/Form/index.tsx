@@ -5,16 +5,20 @@ import { useRef } from 'react'
 import newId from '../../utils/new-id'
 import Wrapper from './Wrapper'
 
-export interface PropsForm {
+interface PropsForm {
     children: JSX.Element[]
 }
 
-export interface PropsField {
+interface PropsField {
     label: string
 }
 
-export interface PropsSubmit {
+interface PropsSubmit {
     label: string
+}
+
+interface PropsSelect extends PropsField {
+    items: Array<{ label: string; value: string }>
 }
 
 const inputStyles = (theme: Theme) => ({
@@ -43,7 +47,7 @@ const Input = ({ label }: PropsField): JSX.Element => {
     )
 }
 
-const Select = ({ label }: PropsField): JSX.Element => {
+const Select = ({ label, items }: PropsSelect): JSX.Element => {
     const id = useRef(newId())
     return (
         <Wrapper id={id.current} label={label}>
@@ -53,7 +57,11 @@ const Select = ({ label }: PropsField): JSX.Element => {
                     ...inputStyles(theme),
                 })}
             >
-                <option>All</option>
+                {items.map((item) => (
+                    <option key={item.value} value={item.value}>
+                        {item.label}
+                    </option>
+                ))}
             </select>
         </Wrapper>
     )
