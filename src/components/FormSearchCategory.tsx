@@ -33,7 +33,7 @@ export default ({
                 items={[{ label: 'All', value: '' }, ...options]}
                 name="category"
             />
-            <Submit label="Load quotes" disabled={disableSubmit} />
+            <Submit label="Load random quote" disabled={disableSubmit} />
         </Form>
     )
 }

@@ -20,7 +20,17 @@ const PillsList = ({ items }: IProps): JSX.Element | null => {
             })}
         >
             {items.map((item) => (
-                <li key={item} css={{ margin: '10px 5px' }}>
+                <li
+                    key={item}
+                    css={(theme) => ({
+                        margin: '10px 5px',
+                        background: theme.colors.light,
+                        borderRadius: theme.radius,
+                        padding: theme.radius,
+                        color: theme.colors.dark50,
+                        fontSize: '.8em',
+                    })}
+                >
                     {item}
                 </li>
             ))}
