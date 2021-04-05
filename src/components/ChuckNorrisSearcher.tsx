@@ -82,6 +82,7 @@ export default (): JSX.Element => {
                 display: 'flex',
                 justifyContent: 'center',
                 minHeight: '100vh',
+                overflow: 'hidden',
                 background: theme.colors.primary,
             })}
         >
