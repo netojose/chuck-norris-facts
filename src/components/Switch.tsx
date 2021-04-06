@@ -1,16 +1,27 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react'
-import { useRef, memo } from 'react'
+import { useRef, useCallback, memo, ChangeEvent } from 'react'
 
 import newId from '../utils/new-id'
 
-const Switch = (): JSX.Element => {
+export interface IProps {
+    onChange: (checked: boolean) => void
+}
+
+const Switch = ({ onChange }: IProps): JSX.Element => {
+    const handleChange = useCallback(
+        (event: ChangeEvent<HTMLInputElement>) => {
+            onChange(event.target.checked)
+        },
+        [onChange]
+    )
     const id = useRef(newId())
     return (
         <span>
             <input
                 type="checkbox"
                 id={id.current}
+                onChange={handleChange}
                 css={(theme) => ({
                     height: 0,
                     width: 0,
