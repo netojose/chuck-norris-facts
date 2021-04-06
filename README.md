@@ -4,7 +4,7 @@
 
 ### Production URL
 
-[https://chuck-norris-facts-jade.vercel.app/](https://chuck-norris-facts-jade.vercel.app/)
+[https://chuck-norris-facts-netojose.vercel.app](https://chuck-norris-facts-netojose.vercel.app)
 
 ### Code source repository
 
@@ -31,6 +31,8 @@ I'm not using ay famous **boilerplate** for this test. Since is a simple project
 The jest and enzyme packages are installed for unit testing, but aren't used. The test specs says to test in Cypress, for e2e testing. Jest and enzyme are installed and configured, and ready to be used.
 
 I'm using TypesCript instead of Javascript, because of Static Type-checking (there are other reasons, but this for me, it's the most important).
+
+This project was made with **accessibility** in mind. All [a11y](https://www.a11yproject.com/checklist) items was approved, and the Eslint is also validating. The interface is **responsive** too.
 
 The application has **RTL support**. I added a toggle button on the top left, to change the content direction.
 
