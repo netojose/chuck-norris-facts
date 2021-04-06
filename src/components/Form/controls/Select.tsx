@@ -8,9 +8,15 @@ interface IProps {
     label: string
     name: string
     items: Array<{ label: string; value: string }>
+    testid?: string
 }
 
-export default ({ label, name, items }: IProps): JSX.Element => {
+export default ({
+    label,
+    name,
+    items,
+    testid = undefined,
+}: IProps): JSX.Element => {
     return (
         <InputWrapper label={label} name={name}>
             {({ handleChange, value, id }) => (
@@ -19,6 +25,7 @@ export default ({ label, name, items }: IProps): JSX.Element => {
                     name={name}
                     onChange={(e) => handleChange(name, e.target.value)}
                     value={value}
+                    data-testid={testid}
                     css={(theme) => ({
                         ...inputStyles(theme),
                     })}

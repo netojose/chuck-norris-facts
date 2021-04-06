@@ -6,12 +6,14 @@ export interface IProps {
     labels: string[]
     children: JSX.Element[]
     onChangeTab?: (index: number) => void
+    testidPrefix?: string
 }
 
 export default ({
     labels,
     children,
     onChangeTab = () => null,
+    testidPrefix = undefined,
 }: IProps): JSX.Element => {
     const [active, setActive] = useState(0)
     const handleSetActive = useCallback(
@@ -50,6 +52,11 @@ export default ({
                             onKeyPress={() => handleSetActive(index)}
                             role="button"
                             tabIndex={0}
+                            data-testid={
+                                testidPrefix
+                                    ? `${testidPrefix}${index}`
+                                    : undefined
+                            }
                             css={(theme) => ({
                                 fontFamily: theme.fontFamily,
                                 display: 'block',

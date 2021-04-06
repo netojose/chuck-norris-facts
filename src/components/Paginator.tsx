@@ -15,6 +15,7 @@ const Paginator = ({
 }: IProps): JSX.Element | null =>
     totalPages < 2 ? null : (
         <ul
+            data-testid="paginator"
             css={(theme) => ({
                 padding: 0,
                 margin: `${theme.spacing}px 0`,

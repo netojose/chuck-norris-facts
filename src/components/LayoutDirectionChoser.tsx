@@ -20,7 +20,7 @@ export default (): JSX.Element => {
                 top: themeLayout.spacing / 2,
             })}
         >
-            <Switch onChange={handleSwitch} />
+            <Switch onChange={handleSwitch} testid="rtl-toggler" />
         </div>
     )
 }

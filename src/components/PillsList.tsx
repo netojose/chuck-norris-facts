@@ -12,6 +12,7 @@ const PillsList = ({ items }: IProps): JSX.Element | null => {
     }
     return (
         <ul
+            data-testid="pills-list"
             css={(theme) => ({
                 listStyle: 'none',
                 display: 'flex',
@@ -21,6 +22,7 @@ const PillsList = ({ items }: IProps): JSX.Element | null => {
         >
             {items.map((item) => (
                 <li
+                    data-testid="pill"
                     key={item}
                     css={(theme) => ({
                         margin: '10px 5px',

@@ -22,8 +22,13 @@ export default ({ onSubmit, disableSubmit }: IProps): JSX.Element => {
                 label="Search term"
                 name="term"
                 placeholder="Please enter at least 3 characters"
+                testid="input-term"
             />
-            <Submit label="Search quotes" disabled={disableSubmit || disable} />
+            <Submit
+                label="Search quotes"
+                disabled={disableSubmit || disable}
+                testid="submit-by-term"
+            />
         </Form>
     )
 }

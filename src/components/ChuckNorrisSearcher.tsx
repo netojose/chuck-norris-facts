@@ -97,6 +97,7 @@ export default (): JSX.Element => {
                 <TabNavigator
                     labels={['Get random quote', 'Search by term']}
                     onChangeTab={handleChangeTab}
+                    testidPrefix="search-type-"
                 >
                     <FormSearchCategory
                         categories={categories}

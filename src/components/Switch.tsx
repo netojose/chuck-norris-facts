@@ -6,9 +6,10 @@ import newId from '../utils/new-id'
 
 export interface IProps {
     onChange: (checked: boolean) => void
+    testid?: string
 }
 
-const Switch = ({ onChange }: IProps): JSX.Element => {
+const Switch = ({ onChange, testid = undefined }: IProps): JSX.Element => {
     const handleChange = useCallback(
         (event: ChangeEvent<HTMLInputElement>) => {
             onChange(event.target.checked)
@@ -17,7 +18,7 @@ const Switch = ({ onChange }: IProps): JSX.Element => {
     )
     const id = useRef(newId())
     return (
-        <span>
+        <span data-testid={testid}>
             <input
                 type="checkbox"
                 id={id.current}

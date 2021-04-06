@@ -58,6 +58,7 @@ const QuotesList = ({ quotes, perPage = 5 }: IProps): JSX.Element => {
                 {paginatedItems.map((quote) => (
                     <li
                         key={quote.id}
+                        data-testid="quote"
                         css={(theme) => ({
                             background: theme.colors.grey,
                             borderRadius: theme.radius * 2,
