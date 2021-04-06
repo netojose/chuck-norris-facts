@@ -30,6 +30,7 @@
     },
     "plugins": ["react", "@typescript-eslint", "react-hooks", "jsx-a11y"],
     "rules": {
+        "jsx-a11y/no-onchange": "off",
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": ["error"],
         "react/require-default-props": "off",
