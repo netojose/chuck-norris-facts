@@ -1,30 +1,40 @@
-# React Boilerplate
+# Chuck Norris Facts searcher
+
+## Urls
+
+### Production URL
+
+[https://chuck-norris-facts-jade.vercel.app/](https://chuck-norris-facts-jade.vercel.app/)
+
+### Code source repository
+
+[https://github.com/netojose/chuck-norris-facts](https://github.com/netojose/chuck-norris-facts)
 
 ## Used technologies
 
--   React
--   TypeScript
--   Emotion
--   Dotenv
--   Eslint
--   Enzyme
--   Prettier
--   Cypress
--   Jest
+-   [React](https://reactjs.org)
+-   [TypeScript](https://www.typescriptlang.org)
+-   [Emotion](https://emotion.sh)
+-   [Dotenv](https://www.npmjs.com/package/dotenv-webpack)
+-   [Eslint](https://eslint.org)
+-   [Enzyme](https://enzymejs.github.io/enzyme)
+-   [Prettier](https://prettier.io)
+-   [Cypress](https://www.cypress.io)
+-   [Jest](https://jestjs.io)
 
-## Avalilable commands
+> > I installed `jest` and `enzyme`, but according to test requirements, only e2e tests using `cypress` was made.
 
-### Type-Checking the repo
+## Useful information
 
-```shell
-npm run type-check
-```
+I'm not using ay famous **boilerplate** for this test. Since is a simple project, with a few features, I focused on the project needs.
 
-### Type-Checking the repo in --watch mode:
+The jest and enzyme packages are installed for unit testing, but aren't used. The test specs says to test in Cypress, for e2e testing. Jest and enzyme are installed and configured, and ready to be used.
 
-```shell
-npm run type-check:watch
-```
+I didn't **comment** the code, because the project is very simple. The code is self-explanatory (split into small blocks, methods and variables with meaningful names, etc.). If a code needs to be commented, it is because it is complex. And if it is complex, there is something wrong.
+
+About the **state management**, wasn't necessary (I like to avoid over engineering). I used the _React context API_ just to manage the form fields. This is useful to avoid take care about each form field. Everything is wrapped inside a form, and I have full control, perfect for big forms. Also is useful to other form implementations (error messages, validation, etc.). I decided to implement by myself for this application, but some some react packages can be used also.
+
+## Available npm scripts
 
 ### Building the `bundle`
 
@@ -42,6 +52,18 @@ npm start
 
 ```shell
 npm start:prod
+```
+
+### Type-Checking the repo
+
+```shell
+npm run type-check
+```
+
+### Type-Checking the repo in --watch mode:
+
+```shell
+npm run type-check:watch
 ```
 
 ### Linting
