@@ -1,6 +1,8 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react'
-import { memo } from 'react'
+import React, { memo, useMemo } from 'react'
+
+import PaginatorButton from './PaginatorButton'
 
 export interface IProps {
     totalPages: number
@@ -12,8 +14,24 @@ const Paginator = ({
     totalPages,
     currentPage,
     onPaginate,
-}: IProps): JSX.Element | null =>
-    totalPages < 2 ? null : (
+}: IProps): JSX.Element | null => {
+    const links = useMemo<number[]>(() => {
+        if (totalPages <= 1) {
+            return []
+        }
+
+        let start = currentPage - 2
+        let end = currentPage + 2
+        start = start < 1 ? 1 : start
+        end = end > totalPages ? totalPages : end
+        return [...Array(totalPages + 1).keys()].slice(start, end + 1)
+    }, [currentPage, totalPages])
+
+    if (links.length < 1) {
+        return null
+    }
+
+    return (
         <ul
             data-testid="paginator"
             css={(theme) => ({
@@ -24,28 +42,36 @@ const Paginator = ({
                 justifyContent: 'center',
             })}
         >
-            {[...Array(totalPages + 1).keys()].slice(1).map((page) => (
-                <li key={page} css={(theme) => ({ margin: theme.spacing / 2 })}>
-                    <input
-                        type="button"
-                        value={page}
-                        disabled={currentPage === page}
-                        onClick={() => onPaginate(page)}
-                        className={currentPage === page ? 'active' : ''}
-                        css={(theme) => ({
-                            border: 'none',
-                            fontFamily: theme.fontFamily,
-                            background: theme.colors.secondary,
-                            color: theme.colors.light,
-                            borderRadius: theme.radius / 2,
-                            '&.active': {
-                                background: theme.colors.primary,
-                            },
-                        })}
+            {links[0] > 1 ? (
+                <React.Fragment>
+                    <PaginatorButton
+                        current={false}
+                        page={1}
+                        onClick={onPaginate}
                     />
-                </li>
+                    ...
+                </React.Fragment>
+            ) : null}
+            {links.map((page) => (
+                <PaginatorButton
+                    key={page}
+                    current={currentPage === page}
+                    page={page}
+                    onClick={onPaginate}
+                />
             ))}
+            {links[links.length - 1] < totalPages ? (
+                <React.Fragment>
+                    ...
+                    <PaginatorButton
+                        current={false}
+                        page={totalPages}
+                        onClick={onPaginate}
+                    />
+                </React.Fragment>
+            ) : null}
         </ul>
     )
+}
 
 export default memo(Paginator)
